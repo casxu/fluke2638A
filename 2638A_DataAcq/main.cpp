@@ -16,36 +16,38 @@ int Query_Instrument()
 {
 	status = viOpenDefaultRM (&defaultRM); 
 	if (status < VI_SUCCESS) {
-		printf ("Open Instrument failed!\n",reply_string);
+		printf ("Open Instrument Failed!\n",reply_string);
 		return -1;
 	}
 
+	/* "ASRL07::INSTR" where 07 is the usb com address */
 	status = viOpen (defaultRM,"ASRL07::INSTR",VI_NULL,VI_NULL, &DataAcqu); 
 	if (status < VI_SUCCESS) {
 		printf ("Open Instrument failed!\n",reply_string);
 		return -1;
 	}
 
+	/* *IDN? is the scpi command ask the Intrument serial number */
 	status = viQueryf(DataAcqu, "*IDN?\n","%t",reply_string);
 	printf ("Instrument identification string: %s\n",reply_string);
 
-	//查询仪器插槽模块的安装状态 返回值：2638A-100,1,2638A-100,0,NONE,0 
-	// 2638A-001 模块代号1表示安装了 0表示未安装
+	// Query the slot status of Intrument which will return: 2638A-100,1,2638A-100,0,NONE,0 
+	// 2638A-001 stands for the first slot 
 	status = viQueryf(DataAcqu, "*OPT?\n","%t",reply_string);
 	printf ("Slots status is: %s\n",reply_string);
 
-	//查询仪器的校准日期 返回值：2013,1,1 
+	// Query the calibration date of 2638A, return formats:2013,1,1 
 	viQueryf(DataAcqu, "CALibrate:DATE? \n","%t",reply_string);
 	printf ("2638A calibration date is: %s\n",reply_string);
 
-	//查询仪器插槽模块1的校准日期 返回值：2013,1,1 
+	// Query the slot's calibration date of 2638A, return format:2013,1,1 
 	viQueryf(DataAcqu, "CALibrate:MODule:DATE? 1\n","%t",reply_string);
 	printf ("Slot 1 calibration DATE is: %s\n",reply_string);
 
 	viQueryf(DataAcqu, "CALibrate:MODule:DATE? 2\n","%t",reply_string);
 	printf ("Slot 2 calibration DATE is: %s\n",reply_string);
 
-	//查询仪器模块1的序列号 返回值：12345678
+	// Query the slot's serial nubmer, return format:12345678
 	viQueryf(DataAcqu, "SYSTem:MODule:CONFigure:SNUM? 1\n","%t",reply_string);
 	printf ("Slot 1 serial Number is: %s\n",reply_string);
 
@@ -88,7 +90,8 @@ void pressure ()
 	
 	for (count = 0; count <5; count++) 
 	{
-		
+	/* Query the Status of Standard Operation Register
+	   after the sweep done, the five bit position will set to 1 */		
 	loop:			
 		viPrintf(DataAcqu, "STAT:OPER?\n");
 		viScanf(DataAcqu,"%d",&status);
@@ -97,21 +100,18 @@ void pressure ()
 		value = status & 0x10;
 		//printf("value = %d ",value);
 		
-		//viPrintf(DataAcqu, "*STB?\n");
-		//viScanf(DataAcqu,"%d",&status);
-		//printf("STB寄存器值 = %d\n", status);
 		
-	if ( !value )
+	if ( !value )  //if not set, keep query
 		goto loop;
-	else
+	else //show the query data
 	{
 		viPrintf(DataAcqu, "SYST:TIME?\n");
 		viScanf(DataAcqu,"%s",&reply_string);
-		printf("当前时间 = %s ", reply_string);
+		printf("Time = %s ", reply_string);
 		
 		viPrintf (DataAcqu,"DATA:READ?\n"); /* Get all the readings */ 
 		viScanf(DataAcqu,"%s",&temp);/* Put readings into an array */
-		printf("压力读数 = %s\n",  temp); 
+		printf("Data = %s\n",  temp); 
 	}
 	
 	}
