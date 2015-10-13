@@ -1,0 +1,38 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: 2638A_DataAcq - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\PSIE\AppData\Local\Temp\RSP5984.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Debug/" /Fp"Debug/2638A_DataAcq.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Users\PSIE\git\fluke2638A\2638A_DataAcq\main.cpp"
+]
+Creating command line "cl.exe @C:\Users\PSIE\AppData\Local\Temp\RSP5984.tmp" 
+Creating temporary file "C:\Users\PSIE\AppData\Local\Temp\RSP5985.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/2638A_DataAcq.pdb" /debug /machine:I386 /out:"Debug/2638A_DataAcq.exe" /pdbtype:sept /libpath:"D:\Program Files (x86)\IVI Foundation\VISA\WinNT\include\visa32.lib" 
+.\Debug\main.obj
+"D:\Program Files (x86)\IVI Foundation\VISA\WinNT\lib\msc\visa32.lib"
+]
+Creating command line "link.exe @C:\Users\PSIE\AppData\Local\Temp\RSP5985.tmp"
+<h3>Output Window</h3>
+Compiling...
+main.cpp
+C:\Users\PSIE\git\fluke2638A\2638A_DataAcq\main.cpp(97) : warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+C:\Users\PSIE\git\fluke2638A\2638A_DataAcq\main.cpp(59) : warning C4715: 'Query_Instrument' : not all control paths return a value
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/2638A_DataAcq.bsc"  .\Debug\main.sbr"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+2638A_DataAcq.exe - 0 error(s), 2 warning(s)
+</pre>
+</body>
+</html>
